@@ -101,8 +101,8 @@ def inject_anomalies(
 
 if __name__ == "__main__":
 
-    INPUT_FILE = "../parsed_data/parsed_logs.csv"
-    OUTPUT_FILE = "../parsed_data/dirty_logs.csv"
+    INPUT_FILE = "parsed_data/parsed_logs.csv"
+    OUTPUT_FILE = "parsed_data/dirty_logs.csv"
 
     df = pd.read_csv(INPUT_FILE)
 

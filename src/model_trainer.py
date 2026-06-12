@@ -36,7 +36,7 @@ def build_and_train_model(X, y, num_classes):
     
     # Callbacks to prevent overfitting and save the best version
     early_stopping = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
-    checkpoint = ModelCheckpoint('best_log_model.keras', monitor='val_loss', save_best_only=True)
+    checkpoint = ModelCheckpoint('models/best_log_model.keras', monitor='val_loss', save_best_only=True)
     
     logger.info("Starting training...")
     history = model.fit(

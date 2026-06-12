@@ -13,7 +13,7 @@ def evaluate():
     print("Loading dirty dataset...")
 
     df = pd.read_csv(
-        "../parsed_data/dirty_logs.csv"
+        "parsed_data/dirty_logs.csv"
     )
 
     # Ground truth labels
@@ -41,8 +41,8 @@ def evaluate():
     )
 
     detector = AnomalyDetector(
-        "best_log_model.keras",
-        "label_encoder.pkl"
+        "models/best_log_model.keras",
+        "models/label_encoder.pkl"
     )
 
     y_pred = []

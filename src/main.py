@@ -8,7 +8,7 @@ logger = logging.getLogger("MainPipeline")
 
 
 def run_pipeline():
-    ingestor = LogIngestor("../data")
+    ingestor = LogIngestor("data")
     parser = LogParser()
 
     parsed_results = []
@@ -29,7 +29,7 @@ def run_pipeline():
     df = pd.DataFrame(parsed_results)
 
     # Generic name for any log source
-    output_file = "../parsed_data/parsed_logs.csv"
+    output_file = "parsed_data/parsed_logs.csv"
 
     df.to_csv(output_file, index=False)
 
