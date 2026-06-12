@@ -11,7 +11,7 @@ logger = logging.getLogger("TrainingPipeline")
 def train():
     logger.info("Loading parsed logs from CSV...")
 
-    df = pd.read_csv("../parsed_data/parsed_logs.csv")
+    df = pd.read_csv("parsed_data/parsed_logs.csv")
 
     engine = FeatureEngine(window_size=10)
 
@@ -43,12 +43,12 @@ def train():
 
     joblib.dump(
         engine.encoder,
-        "label_encoder.pkl"
+        "models/label_encoder.pkl"
     )
 
     logger.info("Model training completed.")
 
-    model.save("final_log_model.keras")
+    model.save("models/final_log_model.keras")
 
     return model, history
 

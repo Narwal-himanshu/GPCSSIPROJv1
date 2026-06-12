@@ -11,8 +11,8 @@ class AnomalyDetector:
 
     def __init__(
         self,
-        model_path="best_log_model.keras",
-        encoder_path="label_encoder.pkl"
+        model_path="models/best_log_model.keras",
+        encoder_path="models/label_encoder.pkl"
     ):
         logger.info("Loading model...")
         self.model = load_model(model_path)
@@ -158,8 +158,8 @@ class AnomalyDetector:
 def run_smoke_test():
 
     detector = AnomalyDetector(
-        model_path="best_log_model.keras",
-        encoder_path="label_encoder.pkl"
+        model_path="models/best_log_model.keras",
+        encoder_path="models/label_encoder.pkl"
     )
 
     logger.info(

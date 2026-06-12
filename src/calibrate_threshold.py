@@ -5,11 +5,11 @@ from anomaly_detector import AnomalyDetector
 
 def calibrate():
     print("Loading data for calibration...")
-    df = pd.read_csv("../parsed_data/parsed_logs.csv")
+    df = pd.read_csv("parsed_data/parsed_logs.csv")
     engine = FeatureEngine(window_size=10)
     X, y = engine.transform(df, column_name="template_id")
 
-    detector = AnomalyDetector("final_log_model.keras", "label_encoder.pkl")
+    detector = AnomalyDetector("models/final_log_model.keras", "models/label_encoder.pkl")
 
     print("Calculating scores across the entire dataset...")
     all_scores = []
