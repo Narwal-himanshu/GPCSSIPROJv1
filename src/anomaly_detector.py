@@ -33,12 +33,13 @@ class AnomalyDetector:
         sequence,
         actual_next_id,
         threshold=5.0,
-        top_k=5
+        top_k=5,
+        raw_log=None
     ):
         """
         Detect anomalies using:
         1. Top-K DeepLog method
-        2. Negative Log Likelihood score
+        2. Negative Log Likelihood score combined with rule-based heuristics
 
         Parameters:
         ----------
@@ -53,6 +54,9 @@ class AnomalyDetector:
 
         top_k : int
             Number of top predictions
+
+        raw_log : str, optional
+            The actual text of the log message
 
         Returns:
         --------
@@ -117,24 +121,45 @@ class AnomalyDetector:
             )
 
             # Negative Log Likelihood
-            score = float(
+            nll_score = float(
                 -np.log(
                     prob_actual + 1e-10
                 )
             )
 
+            # Rule-based heuristics
+            error_score = 0.0
+            unknown_score = 0.0
+
+            if raw_log:
+                log_lower = raw_log.lower()
+                if "error" in log_lower:
+                    error_score = 5.0
+                if "unknown ip" in log_lower or "unknown command" in log_lower or "unknown" in log_lower:
+                    unknown_score = 35.0
+
+            # Normalize AI Score to 0-60
+            ai_score = min((nll_score / 20.0) * 60.0, 60.0)
+
+            # Final Score distribution
+            final_score = error_score + unknown_score + ai_score
+
             # Final decision
             is_anomaly = (
                 (not top_k_hit)
                 or
-                (score > threshold)
+                (final_score > threshold)
             )
 
             return {
                 "anomaly": bool(
                     is_anomaly
                 ),
-                "score": score,
+                "score": final_score,
+                "error_score": error_score,
+                "unknown_score": unknown_score,
+                "ai_score": ai_score,
+                "nll_score": nll_score,
                 "probability": prob_actual,
                 "top_k_hit": bool(
                     top_k_hit

@@ -11,13 +11,16 @@ def calibrate():
 
     detector = AnomalyDetector("models/final_log_model.keras", "models/label_encoder.pkl")
 
+    valid_df = df.dropna(subset=["template_id"]).reset_index(drop=True)
+
     print("Calculating scores across the entire dataset...")
     all_scores = []
     
     # We iterate through all sequences to build our statistical baseline
     for i in range(1000):
+        raw_log_text = valid_df.iloc[10 + i]["raw_log"]
         # We pass a very high threshold to ensure we capture the true scores
-        res = detector.detect(X[i], int(y[i]), threshold=999.0)
+        res = detector.detect(X[i], int(y[i]), threshold=999.0, raw_log=raw_log_text)
         all_scores.append(res['score'])
         if i % 100 == 0:
            print(f"Processed {i}/1000")

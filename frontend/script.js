@@ -24,10 +24,10 @@ function displayMockResults() {
     // Generate mock data representing an analysis of the uploaded log file
     const totalLines = 500;
     const mockAnomalies = [
-        { line: 42, content: "ERROR: Connection timeout connecting to database 10.0.0.5", score: "15.4", prediction: "Anomaly" },
-        { line: 128, content: "WARN: Unrecognized token 'admin' attempted login", score: "12.8", prediction: "Anomaly" },
-        { line: 310, content: "FATAL: OutOfMemoryException in Thread-4", score: "22.1", prediction: "Anomaly" },
-        { line: 499, content: "INFO: Failed to load module 'secure_auth.so'", score: "9.5", prediction: "Anomaly" }
+        { line: 42, content: "ERROR: Connection timeout connecting to database 10.0.0.5", score: "65.0 (Error: 5, Unknown: 0, AI: 60)", prediction: "Anomaly" },
+        { line: 128, content: "WARN: Unrecognized token 'admin' attempted login from unknown IP 192.168.1.100", score: "85.0 (Error: 0, Unknown: 35, AI: 50)", prediction: "Anomaly" },
+        { line: 310, content: "FATAL: OutOfMemoryException in Thread-4", score: "42.0 (Error: 0, Unknown: 0, AI: 42)", prediction: "Normal" },
+        { line: 499, content: "ERROR: unknown command 'rm -rf /' executed by root", score: "100.0 (Error: 5, Unknown: 35, AI: 60)", prediction: "Anomaly" }
     ];
 
     document.getElementById('totalLogs').textContent = totalLines;

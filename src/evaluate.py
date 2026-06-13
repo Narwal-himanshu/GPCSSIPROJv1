@@ -45,6 +45,8 @@ def evaluate():
         "models/label_encoder.pkl"
     )
 
+    valid_df = df.dropna(subset=["template_id"]).reset_index(drop=True)
+
     y_pred = []
 
     print(
@@ -59,11 +61,15 @@ def evaluate():
                 f"{i}/{len(X)}"
             )
 
+        # y[i] is at offset 10 (window_size)
+        raw_log_text = valid_df.iloc[10 + i]["raw_log"]
+
         result = detector.detect(
             sequence=X[i],
             actual_next_id=int(y[i]),
-            threshold=15.67,
-            top_k=20
+            threshold=47.0,
+            top_k=20,
+            raw_log=raw_log_text
         )
 
         y_pred.append(
